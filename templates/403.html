@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}403 — FaceGuard{% endblock %}
+{% block content %}
+<div class="error-page">
+  <div class="error-code">403</div>
+  <div class="error-msg">Access Denied</div>
+  <div class="error-desc">You don't have permission to access this page. Admin role required.</div>
+  <a href="{{ url_for('dashboard') }}" class="btn-primary">← Back to Dashboard</a>
+</div>
+{% endblock %}

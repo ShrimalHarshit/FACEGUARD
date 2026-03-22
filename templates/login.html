@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Login — FaceGuard{% endblock %}
+
+{% block content %}
+<div class="login-page">
+
+  <!-- Left panel: branding -->
+  <div class="login-left">
+    <div class="brand-block">
+      <div class="brand-hex">⬡</div>
+      <h1 class="brand-name">FACE<span>GUARD</span></h1>
+      <p class="brand-tagline">Role-Based Biometric Access Control</p>
+    </div>
+    <div class="brand-tech">
+      <span class="tech-tag">FLDM Algorithm</span>
+      <span class="tech-tag">68-Point Landmarks</span>
+      <span class="tech-tag">Python + OpenCV</span>
+    </div>
+    <div class="brand-desc">
+      Look into the camera. Your face <em>is</em> your password.
+    </div>
+  </div>
+
+  <!-- Right panel: scanner -->
+  <div class="login-right">
+    <div class="scanner-card">
+      <div class="scanner-header">
+        <div class="scanner-status" id="statusDot"></div>
+        <span class="scanner-label" id="statusLabel">INITIALIZING</span>
+      </div>
+
+      <!-- Webcam viewport -->
+      <div class="scanner-viewport" id="viewport">
+        <video id="video" autoplay muted playsinline></video>
+        <canvas id="overlay"></canvas>
+
+        <!-- Scan frame corners -->
+        <div class="scan-corner tl"></div>
+        <div class="scan-corner tr"></div>
+        <div class="scan-corner bl"></div>
+        <div class="scan-corner br"></div>
+
+        <!-- Scan line -->
+        <div class="scan-line" id="scanLine"></div>
+
+        <!-- Result overlay -->
+        <div class="result-overlay" id="resultOverlay">
+          <div class="result-icon" id="resultIcon"></div>
+          <div class="result-text" id="resultText"></div>
+        </div>
+      </div>
+
+      <!-- Score display -->
+      <div class="score-bar-wrap" id="scoreWrap" style="display:none">
+        <div class="score-label">FLDM Deviation Score</div>
+        <div class="score-bar">
+          <div class="score-fill" id="scoreFill"></div>
+        </div>
+        <div class="score-value" id="scoreValue"></div>
+      </div>
+
+      <!-- Action button -->
+      <button class="scan-btn" id="scanBtn" disabled>
+        <span class="scan-btn-icon">◉</span>
+        <span id="scanBtnText">Starting Camera...</span>
+      </button>
+
+      <p class="scanner-hint">Center your face in the frame, then press Scan</p>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/camera.js') }}"></script>
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+{% endblock %}

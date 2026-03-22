@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — FaceGuard{% endblock %}
+
+{% block content %}
+<div class="dashboard-page employee-dash">
+
+  <div class="dash-header">
+    <div class="dash-welcome">
+      <div class="dash-role-badge employee-badge">◆ EMPLOYEE</div>
+      <h1 class="dash-name">Welcome, {{ user.name }}</h1>
+      <p class="dash-sub">You are securely logged in via facial recognition.</p>
+    </div>
+    <div class="dash-time" id="dashTime"></div>
+  </div>
+
+  <div class="employee-card">
+    <div class="emp-avatar">{{ user.name[0].upper() }}</div>
+    <div class="emp-info">
+      <div class="emp-name">{{ user.name }}</div>
+      <div class="emp-role">Employee</div>
+      <div class="emp-status">
+        <span class="status-dot"></span> Authenticated via FLDM Face Recognition
+      </div>
+    </div>
+  </div>
+
+  <div class="emp-access-list">
+    <div class="access-title">Your Access Level</div>
+    <div class="access-item allowed">
+      <span class="access-icon">✓</span> View your personal profile
+    </div>
+    <div class="access-item allowed">
+      <span class="access-icon">✓</span> Access employee portal resources
+    </div>
+    <div class="access-item allowed">
+      <span class="access-icon">✓</span> Secure biometric session active
+    </div>
+    <div class="access-item denied">
+      <span class="access-icon">✗</span> Admin panel (Admin role required)
+    </div>
+    <div class="access-item denied">
+      <span class="access-icon">✗</span> User management (Admin role required)
+    </div>
+  </div>
+
+  <div class="emp-note">
+    Need admin access? Contact your system administrator to update your role.
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const timeEl = document.getElementById("dashTime");
+  function updateTime() {
+    timeEl.textContent = new Date().toLocaleTimeString("en-IN", {
+      hour: "2-digit", minute: "2-digit", second: "2-digit"
+    });
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+</script>
+{% endblock %}

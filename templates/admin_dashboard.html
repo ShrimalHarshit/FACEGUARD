@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — FaceGuard{% endblock %}
+
+{% block content %}
+<div class="dashboard-page">
+
+  <div class="dash-header">
+    <div class="dash-welcome">
+      <div class="dash-role-badge admin-badge">⬡ ADMIN</div>
+      <h1 class="dash-name">Welcome, {{ user.name }}</h1>
+      <p class="dash-sub">You have full system access.</p>
+    </div>
+    <div class="dash-time" id="dashTime"></div>
+  </div>
+
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card">
+      <div class="stat-icon">👤</div>
+      <div class="stat-value" id="statTotal">—</div>
+      <div class="stat-label">Total Users</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🛡</div>
+      <div class="stat-value" id="statAdmins">—</div>
+      <div class="stat-label">Admins</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">👁</div>
+      <div class="stat-value" id="statEnrolled">—</div>
+      <div class="stat-label">Face Enrolled</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🔐</div>
+      <div class="stat-value" id="statLogins">—</div>
+      <div class="stat-label">Auth Attempts Today</div>
+    </div>
+  </div>
+
+  <div class="dash-actions">
+    <a href="{{ url_for('add_user_page') }}" class="action-card">
+      <div class="action-icon">＋</div>
+      <div class="action-title">Add New User</div>
+      <div class="action-desc">Enroll a face and create a user account</div>
+    </a>
+    <a href="{{ url_for('manage_users_page') }}" class="action-card">
+      <div class="action-icon">⚙</div>
+      <div class="action-title">Manage Users</div>
+      <div class="action-desc">Assign roles, remove users, re-enroll faces</div>
+    </a>
+    <a href="{{ url_for('auth_log_page') }}" class="action-card">
+      <div class="action-icon">📋</div>
+      <div class="action-title">Auth Log</div>
+      <div class="action-desc">Review all login attempts and FLDM scores</div>
+    </a>
+  </div>
+
+  <div class="fldm-info-panel">
+    <div class="fldm-info-title">⬡ FLDM Engine Status</div>
+    <div class="fldm-zones">
+      <div class="zone-chip">EAR <span class="zone-weight">×1.2</span></div>
+      <div class="zone-chip">NBR <span class="zone-weight">×1.0</span></div>
+      <div class="zone-chip">MWR <span class="zone-weight">×1.1</span></div>
+      <div class="zone-chip">JAR <span class="zone-weight">×0.9</span></div>
+      <div class="zone-chip">BRR <span class="zone-weight">×0.8</span></div>
+    </div>
+    <div class="fldm-threshold">Auth Threshold: <strong>D &lt; 0.08</strong></div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/admin_dashboard.js') }}"></script>
+{% endblock %}

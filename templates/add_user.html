@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Add User — FaceGuard{% endblock %}
+
+{% block content %}
+<div class="enroll-page">
+  <div class="page-header">
+    <h2 class="page-title">Add New User</h2>
+    <p class="page-sub">Enroll a face and create a user account. Role can be set in Manage Users after enrollment.</p>
+  </div>
+
+  <div class="enroll-layout">
+
+    <!-- Left: form -->
+    <div class="enroll-form-panel">
+      <div class="form-group">
+        <label class="form-label" for="userName">Full Name</label>
+        <input class="form-input" type="text" id="userName" placeholder="e.g. Harshit Patil" autocomplete="off" />
+      </div>
+
+      <div class="enroll-steps">
+        <div class="step" id="step1" data-active="true">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Enter name above</div>
+            <div class="step-desc">Type the user's full name</div>
+          </div>
+        </div>
+        <div class="step" id="step2">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Position face in frame</div>
+            <div class="step-desc">Ask the user to look directly at camera</div>
+          </div>
+        </div>
+        <div class="step" id="step3">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Capture frames</div>
+            <div class="step-desc">Click Capture — hold still during scanning</div>
+          </div>
+        </div>
+        <div class="step" id="step4">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Submit enrollment</div>
+            <div class="step-desc">Save user and encoding to database</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="capture-progress" id="captureProgress" style="display:none">
+        <div class="progress-label">
+          Frames captured: <span id="frameCount">0</span> / 8
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="enroll-btns">
+        <button class="btn-secondary" id="captureBtn" disabled>
+          <span>◉</span> Capture Frames
+        </button>
+        <button class="btn-primary" id="submitBtn" disabled>
+          <span>✓</span> Enroll User
+        </button>
+      </div>
+
+      <!-- Result message -->
+      <div class="enroll-result" id="enrollResult" style="display:none"></div>
+    </div>
+
+    <!-- Right: webcam -->
+    <div class="enroll-cam-panel">
+      <div class="scanner-viewport enroll-viewport" id="viewport">
+        <video id="video" autoplay muted playsinline></video>
+        <div class="scan-corner tl"></div>
+        <div class="scan-corner tr"></div>
+        <div class="scan-corner bl"></div>
+        <div class="scan-corner br"></div>
+        <div class="scan-line capture-line" id="scanLine"></div>
+
+        <!-- Captured frames strip -->
+        <div class="frames-strip" id="framesStrip"></div>
+      </div>
+      <p class="enroll-cam-hint">Camera activates automatically. Keep the user's face in the frame.</p>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/camera.js') }}"></script>
+<script src="{{ url_for('static', filename='js/enroll.js') }}"></script>
+{% endblock %}

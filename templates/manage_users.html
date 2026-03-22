@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Manage Users — FaceGuard{% endblock %}
+
+{% block content %}
+<div class="manage-page">
+  <div class="page-header">
+    <h2 class="page-title">User Management</h2>
+    <p class="page-sub">Assign roles, remove users, and manage face enrollments.</p>
+    <a href="{{ url_for('add_user_page') }}" class="btn-primary btn-sm">＋ Add User</a>
+  </div>
+
+  <div class="users-table-wrap">
+    {% if users %}
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Face Enrolled</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr class="user-row" data-id="{{ u.id }}">
+          <td class="td-id">#{{ u.id }}</td>
+          <td class="td-name">
+            <div class="user-avatar-sm">{{ u.name[0].upper() }}</div>
+            {{ u.name }}
+            {% if u.id == current_user.id %}
+            <span class="you-badge">YOU</span>
+            {% endif %}
+          </td>
+          <td class="td-role">
+            <select class="role-select" data-user-id="{{ u.id }}"
+              {% if u.id == current_user.id %}disabled{% endif %}>
+              <option value="employee" {% if u.role == 'employee' %}selected{% endif %}>Employee</option>
+              <option value="admin"    {% if u.role == 'admin'    %}selected{% endif %}>Admin</option>
+            </select>
+          </td>
+          <td class="td-face">
+            {% if u.has_face %}
+            <span class="face-badge enrolled">✓ Enrolled</span>
+            {% else %}
+            <span class="face-badge missing">✗ Missing</span>
+            {% endif %}
+          </td>
+          <td class="td-date">{{ u.created_at[:10] }}</td>
+          <td class="td-actions">
+            {% if u.id != current_user.id %}
+            <button class="btn-danger-sm" onclick="deleteUser({{ u.id }}, '{{ u.name }}')">Delete</button>
+            {% else %}
+            <span class="td-self-note">—</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">👤</div>
+      <div class="empty-title">No users yet</div>
+      <div class="empty-desc">Start by adding a user through the Add User page.</div>
+      <a href="{{ url_for('add_user_page') }}" class="btn-primary">Add First User</a>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/manage_users.js') }}"></script>
+{% endblock %}

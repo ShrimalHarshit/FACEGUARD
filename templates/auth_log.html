@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Auth Log — FaceGuard{% endblock %}
+
+{% block content %}
+<div class="manage-page">
+  <div class="page-header">
+    <h2 class="page-title">Authentication Log</h2>
+    <p class="page-sub">All login attempts with FLDM deviation scores. Lower score = stronger match.</p>
+  </div>
+
+  <div class="users-table-wrap">
+    {% if logs %}
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>FLDM Score</th>
+          <th>Result</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in logs %}
+        <tr>
+          <td class="td-id">{{ log.id }}</td>
+          <td class="td-name">{{ log.name or '— Unknown —' }}</td>
+          <td class="td-score">
+            {% if log.score is not none %}
+            <div class="score-mini">
+              <div class="score-mini-bar">
+                <div class="score-mini-fill {% if log.score < 0.08 %}fill-green{% else %}fill-red{% endif %}"
+                     style="width: {{ [log.score * 400, 100] | min }}%"></div>
+              </div>
+              <span class="score-num">{{ "%.4f"|format(log.score) }}</span>
+            </div>
+            {% else %}
+            <span class="no-score">N/A</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if log.success %}
+            <span class="face-badge enrolled">✓ Success</span>
+            {% else %}
+            <span class="face-badge missing">✗ Failed</span>
+            {% endif %}
+          </td>
+          <td class="td-date">{{ log.attempted_at[:19] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">📋</div>
+      <div class="empty-title">No auth attempts yet</div>
+      <div class="empty-desc">Login attempts will appear here once users start logging in.</div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
