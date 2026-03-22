@@ -1,7 +1,6 @@
 # ⬡ FaceGuard
 
 **Role-Based Face Recognition Authentication System**  
-*Mini Project | B.Sc. Cyber and Digital Science | SPPU | Sem-III*
 
 ---
 
@@ -263,7 +262,7 @@ FLDM_THRESHOLD = 0.08   # Lower = stricter (more false rejects)
 
 ## Academic Context
 
-This project was built for the **CDS-231-FP Mini Project** unit under the **S.Y.B.Sc Cyber and Digital Science** program, Savitribai Phule Pune University (SPPU), Academic Year 2025–26.
+This project was built for the **Mini Project** unit under the **S.Y.B.Sc Computer Science** program, Savitribai Phule Pune University (SPPU), Academic Year 2025–26.
 
 The FLDM algorithm is an **original contribution** developed for this project. It does not wrap any library's recognition function.
 
